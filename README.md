@@ -6,11 +6,11 @@
 
 <h1>Описание задания</h1>
 
-![Image alt](https://github.com/NewErr0r/39-WSI/blob/main/topology.png?raw=true)
+![Image alt](https://github.com/NewErr0r/39-WSI/blob/main/demo_topology.drawio.png?raw=true)
 
 <h1>Таблица 1. Характеристики ВМ</h1>
 
-![Image alt](https://github.com/NewErr0r/39-WSI/blob/main/table_vm.png?raw=true)
+![Image alt](https://github.com/NewErr0r/39-WSI/blob/main/table.png?raw=true)
 
 <h2>Виртуальные машины и коммутация</h2>
 
@@ -57,4 +57,50 @@ vi /etc/network/interfaces      # enp0s3 NAT-адаптер ( доступ в И
 systemctl restart networking
 </pre>
 
+<h4>RTR-L</h4>
 
+<pre>
+hostnamectl set-hostname RTR-L
+</pre>
+<pre>
+vi /etc/network/interfaces
+    
+    auto enp0s3 
+    iface enp0s3 inet static
+    address 4.4.4.100
+    netmask 255.255.255.0
+    gateway 4.4.4.1
+    
+    auto enp0s8
+    iface enp0s8 inet static
+    address 192.168.100.254 
+    netmask 255.255.255.0  
+    dns-nameservers 192.168.100.200
+</pre>
+<pre>
+systemctl restart networking
+</pre>
+
+<h4>RTR-R</h4>
+
+<pre>
+hostnamectl set-hostname RTR-R
+</pre>
+<pre>
+vi /etc/network/interfaces
+    
+    auto enp0s3 
+    iface enp0s3 inet static
+    address 5.5.5.100
+    netmask 255.255.255.0
+    gateway 5.5.5.1
+    
+    auto enp0s8
+    iface enp0s8 inet static
+    address 172.16.100.254 
+    netmask 255.255.255.0  
+    dns-nameservers 192.168.100.200
+</pre>
+<pre>
+systemctl restart networking
+</pre>
