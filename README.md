@@ -104,3 +104,60 @@ vi /etc/network/interfaces
 <pre>
 systemctl restart networking
 </pre>
+
+<h4>SRV</h4>
+
+<pre>
+hostnamectl set-hostname SRV
+</pre>
+<pre>
+vi /etc/network/interfaces
+    
+    auto enp0s3 
+    iface enp0s3 inet static
+    address 192.168.100.200
+    netmask 255.255.255.0
+    gateway 192.168.100.254
+    dns-nameservers 4.4.4.1 192.168.100.200
+</pre>
+<pre>
+systemctl restart networking
+</pre>
+
+<h4>WEB-L</h4>
+
+<pre>
+hostnamectl set-hostname WEB-L
+</pre>
+<pre>
+vi /etc/network/interfaces
+    
+    auto enp0s3 
+    iface enp0s3 inet static
+    address 192.168.100.100
+    netmask 255.255.255.0
+    gateway 192.168.100.254
+    dns-nameservers 192.168.100.200
+</pre>
+<pre>
+systemctl restart networking
+</pre>
+
+<h4>WEB-R</h4>
+
+<pre>
+hostnamectl set-hostname WEB-R
+</pre>
+<pre>
+vi /etc/network/interfaces
+    
+    auto enp0s3 
+    iface enp0s3 inet static
+    address 172.16.100.100
+    netmask 255.255.255.0
+    gateway 172.16.100.254
+    dns-nameservers 192.168.100.200
+</pre>
+<pre>
+systemctl restart networking
+</pre>
