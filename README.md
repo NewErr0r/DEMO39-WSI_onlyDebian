@@ -161,3 +161,12 @@ vi /etc/network/interfaces
 <pre>
 systemctl restart networking
 </pre>
+
+<h4>CLI</h4>
+
+<pre>
+Rename-Computer -NewName CLI
+Restart-Computer
+</pre>
+
+![Image alt](https://github.com/NewErr0r/39-WSI/blob/main/ipv4_cli.png?raw=true)
