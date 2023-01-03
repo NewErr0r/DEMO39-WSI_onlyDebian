@@ -124,6 +124,10 @@ vi /etc/network/interfaces
 systemctl restart networking
 </pre>
 
+<p> Доп. диски </p>
+
+![Image alt](https://github.com/NewErr0r/39-WSI/blob/main/disks.png?raw=true)
+
 <h4>WEB-L</h4>
 
 <pre>
