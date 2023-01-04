@@ -367,8 +367,45 @@ Restart-Computer
             </ul>
             <li>Внутренние хосты регионов (равно как и платформы управления трафиком) должны использовать данную DNS-службу для разрешения всех запросов имен;</li>
             <h4>SRV</h4>
-            <pre></pre>
-        </ul>
-    </ul>
+            <pre>apt install bind9 -y</pre>
+            <pre>mkdir /opt/dns<br>cp /etc/bind/db.local /opt/dns/int.demo.db<br>cp /etc/bind/db.127 /opt/dns/100.168.192.in-addr.arpa.db<br>cp /etc/bind/db.127 /opt/dns/100.16.172.in-addr.arpa.db<br>chown -R bind:bind /opt/dns</pre>
+            <pre>vi /etc/apparmor.d/usr.sbin.named<br>...<br>/opt/dns/** rw,<br>...</pre>
+            <pre>systemctl restart apparmor.service</pre>
+            <pre>vi /etc/bind/named.conf.options<br>options {
+            directory "/var/cache/bind";
+            dnssec-validation no;
+            allow-query { any; };
+            listen-on-v6 { any; };
+        };</pre>
+            <pre>vi /etc/bind/named.conf.default-zones<br>
+        zone "int.demo.wsr" {
+            type master;
+            allow-transfer { any; };
+            file "/opt/dns/int.demo.db";
+        };<br>        
+        zone "100.168.192.in-addr.arpa" {
+            type master;
+            allow-transfer { any; };
+            file "/opt/dns/100.168.192.in-addr.arpa.db";
+        };<br>  
+        zone "100.16.172.in-addr.arpa" {
+            type master;
+            allow-transfer { any; };
+            file "/opt/dns/100.16.172.in-addr.arpa.db";
+        };</pre>  
+            </pre>
+ <pre>vi /opt/dns/int.demo.db</pre>
+            
+![Image alt](https://github.com/NewErr0r/39-WSI/blob/main/int_demo_db.png?raw=true)
+            
+ <pre>vi /opt/dns/100.168.192.in-addr.arpa.db</pre>
+            
+![Image alt](https://github.com/NewErr0r/39-WSI/blob/main/arpa_1.png?raw=true)
+            
+ <pre>vi /opt/dns/100.16.172.in-addr.arpa.db</pre>
+            
+![Image alt](https://github.com/NewErr0r/39-WSI/blob/main/arpa_2.png?raw=true)
+            
+ <pre>systemctl restatr bind9</pre>
 
 
