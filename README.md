@@ -216,7 +216,18 @@ Restart-Computer
         </ul>
     <li>Трафик, идущий по туннелю между регионами по внутренним адресам, не должен транслироваться.</li>
     <h4>RTR-L</h4>
-    <pre></pre>
+    <pre>apt install wireguard -y</pre>
+    <pre>mkdir /etc/wireguard/keys<br>cd /etc/wireguard/keys<br>wg genkey | tee srv-sec.key | wg pubkey > srv-pub.key<br>wg genkey | tee cli-sec.key | wg pubkey > cli-pub.key</pre>
+    <pre>cat srv-sec.key cli-pub.key >> /etc/wireguard/wg0.conf<br>vi /etc/wireguard/wg0.conf<br>
+      [Interface]
+      Address = 10.20.30.1/30
+      ListenPort = 12345
+      PrivateKey = srv-sec.key<br>  
+      [Peer]
+      PublicKey = cli-pub.key
+      AllowedIPs = 10.20.30.0/30, 172.16.100.0/24</pre>
+    <pre>systemctl enable --now wg-quick@wg0</pre>
+    <pre>firewall-cmd --permanent --add-port=12345/{tcp,udp}<br>firewall-cmd --permanent --zone=trusted --add-interface=wg0<br>firewall-cmd --reload</pre>
     </ul>
 </ul>
     
