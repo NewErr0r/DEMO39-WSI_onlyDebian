@@ -261,6 +261,7 @@ Restart-Computer
         <li>Разрешается работа протокола SSH;</li>
         <li>Прочие подключения запрещены;</li>
         <li>Для обращений в платформам со стороны хостов, находящихся внутри регионов, ограничений быть не должно;</li>
+        <h4>RTR-L</h4>
         <pre>firewall-cmd --permanent --add-service={dns,http,https}<br>firewall-cmd --permanent --add-protocol=icmp<br>firewall-cmd --reload</pre> 
     </ul>
     <li>Платформа управления трафиком RTR-R выполняет контроль входящего трафика согласно следующим правилам:</li>
@@ -277,6 +278,7 @@ Restart-Computer
         <li>Разрешается работа протокола SSH;</li>
         <li>Прочие подключения запрещены;</li>
         <li>Для обращений в платформам со стороны хостов, находящихся внутри регионов, ограничений быть не должно;</li>
+        <h4>RTR-R</h4>
         <pre>firewall-cmd --permanent --add-service={http,https}<br>firewall-cmd --permanent --add-protocol=icmp<br>firewall-cmd --reload</pre> 
     </ul>
 </ul>
