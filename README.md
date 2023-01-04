@@ -184,5 +184,40 @@ Restart-Computer
     <ul>
       <li>Запрещено прямое попадание трафика из внутренних сетей во внешние и наоборот;</li>
         <h4>ISP</h4>
-        <pre></pre>
+        <pre>echo net.ipv4.ip_forward=1 >> /etc/sysctl.conf<br> sysctl -p</pre>
     </ul>
+    <li>Платформы контроля трафика, установленные на границах регионов, должны выполнять трансляцию трафика, идущего из соответствующих внутренних сетей во внешние сети стенда и в сеть Интернет.</li>
+    <ul>
+      <li>Трансляция исходящих адресов производится в адрес платформы, расположенный во внешней сети.</li>
+        <h4>ISP</h4>
+        <pre>apt install -y firewalld<br>systemctl enable --now firewalld</pre>
+        <pre>firewall-cmd --permanent --zone=trusted --add-interface=enp0s{8,9,10}<br>firewall-cmd --permanent --add-masquerade<br>firewall-cmd --reload</pre>
+        <h4>RTR-L</h4>
+        <pre>echo net.ipv4.ip_forward=1 >> /etc/sysctl.conf<br> sysctl -p</pre>
+        <pre>echo nameserver 77.88.8.8 > /etc/resolv.conf<br>apt install -y firewalld<br>systemctl enable --now firewalld</pre>
+        <pre>firewall-cmd --permanent --zone=trusted --add-interface=enp0s8<br>firewall-cmd --permanent --add-masquerade<br>firewall-cmd --reload</pre>
+        <h4>RTR-R</h4>
+        <pre>echo net.ipv4.ip_forward=1 >> /etc/sysctl.conf<br> sysctl -p</pre>
+        <pre>echo nameserver 77.88.8.8 > /etc/resolv.conf<br>apt install -y firewalld<br>systemctl enable --now firewalld</pre>
+        <pre>firewall-cmd --permanent --zone=trusted --add-interface=enp0s8<br>firewall-cmd --permanent --add-masquerade<br>firewall-cmd --reload</pre>
+    </ul>
+</ul>
+
+<ul>
+    <li>Между платформами должен быть установлен защищенный туннель, позволяющий осуществлять связь между регионами применением внутренних адресов.</li>
+    <ul>
+    <li>Трафик, проходящий по данному туннелю, должен быть защищен:</li>
+        <ul>
+        <li>Платформа ISP не должна иметь возможности просматривать содержимое пакетов, идущих из одной внутренней сети в другую.</li>
+        </ul>
+    <li>Туннель должен позволять защищенное взаимодействие между платформами управления трафиком по их внутренним адресам</li>
+        <ul>
+        <li>Взаимодействие по внешним адресам должно происходит без применения туннеля и шифрования</li>
+        </ul>
+    <li>Трафик, идущий по туннелю между регионами по внутренним адресам, не должен транслироваться.</li>
+    <h4>RTR-L</h4>
+    <pre></pre>
+    </ul>
+</ul>
+    
+
