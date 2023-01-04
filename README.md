@@ -230,7 +230,19 @@ Restart-Computer
     <pre>firewall-cmd --permanent --add-port=12345/{tcp,udp}<br>firewall-cmd --permanent --zone=trusted --add-interface=wg0<br>firewall-cmd --reload</pre>
     <pre>vi /etc/ssh/sshd_config<br>...<br>PermitRootLogin yes<br>...</pre>
     <pre>systemctl restart sshd</pre>
+    <h4>RTR-R</h4>
+    <pre>apt install wireguard -y</pre>
+    <pre>mkdir /etc/wireguard/keys<br>cd /etc/wireguard/keys<br>scp root@4.4.4.100:/etc/wireguard/cli-sec.key ./<br>scp root@4.4.4.100:/etc/wireguard/srv-pub.key ./</pre>
+    <pre>cat cli-sec.key srv-pub.key >> /etc/wireguard/wg0.conf<br>vi /etc/wireguard/wg0.conf<br>
+      [Interface]
+      Address = 10.20.30.2/30
+      PrivateKey = cli-sec.key<br>  
+      [Peer]
+      PublicKey = srv-pub.key
+      Endpoint = 4.4.4.100:12345
+      AllowedIPs = 10.20.30.0/30, 192.168.100.0/24
+      PersistentKeepalive = 10</pre>
+    <pre>systemctl enable --now wg-quick@wg0</pre>
+    <pre>firewall-cmd --permanent --zone=trusted --add-interface=wg0<br>firewall-cmd --reload</pre>
     </ul>
 </ul>
-    
-
