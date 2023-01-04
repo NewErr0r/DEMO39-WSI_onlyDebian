@@ -320,8 +320,30 @@ Restart-Computer
             <li>Маршрутизатор региона должен транслировать соответствующие порты DNS-службы в порты сервера SRV.</li>
         </ul>
         <li>Внешний клиент CLI должен использовать DNS-службу, развернутую на ISP, по умолчанию;</li>
-        <pre></pre>
-    </ul>
+        <h4>ISP</h4>
+        <pre>apt install bind9 -y</pre>
+        <pre>mkdir /opt/dns<br>cp /etc/bind/db.local /opt/dns/demo.db<br>chown -R bind:bind /opt/dns</pre>
+        <pre>vi /etc/apparmor.d/usr.sbin.named<br>...<br>/opt/dns/** rw,<br>...</pre>
+        <pre>systemctl restart apparmor.service</pre>
+        <pre>vi /etc/bind/named.conf.options<br>options {
+            directory "/var/cache/bind";
+            dnssec-validation no;
+            allow-query { any; };
+            listen-on-v6 { any; };
+        };</pre>
+        <pre>vi /etc/bind/named.conf.default-zones<br>zone "demo.wsr" {
+            type master;
+            allow-transfer { any; };
+            file "/opt/dns/demo.db";
+        };</pre>
+        <pre>vi /opt/dns/demo.db</pre>
+        
+![Image alt](https://github.com/NewErr0r/39-WSI/blob/main/demo_db.png?raw=true)
+
+</pre>
+<pre>systemctl restatr bind9</pre>
+        <h4>RTR-L</h4>
+        <pre>firewall-cmd --permanent --add-forward-port=port=53:proto={tcp,udp}:toport=53:toaddr=192.168.100.200<br>firewall-cmd --reload</pre>
 </ul>
 
 
