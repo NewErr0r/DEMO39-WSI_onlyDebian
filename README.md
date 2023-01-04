@@ -228,6 +228,8 @@ Restart-Computer
       AllowedIPs = 10.20.30.0/30, 172.16.100.0/24</pre>
     <pre>systemctl enable --now wg-quick@wg0</pre>
     <pre>firewall-cmd --permanent --add-port=12345/{tcp,udp}<br>firewall-cmd --permanent --zone=trusted --add-interface=wg0<br>firewall-cmd --reload</pre>
+    <pre>vi /etc/ssh/sshd_config<br>...<br>PermitRootLogin yes<br>...</pre>
+    <pre>systemctl restart sshd</pre>
     </ul>
 </ul>
     
