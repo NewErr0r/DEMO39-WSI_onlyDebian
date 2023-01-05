@@ -550,14 +550,19 @@ Restart-Computer
 <p>Данный блок подразумевает установку и настройку доступа к веб-приложению, выполненному в формате контейнера Docker.</p>
 
 <ul>
-    <li>Образ Docker (содержащий веб-приложение) расположен на ISO-образе (WEB-L/R /root/AppDocker0) дополнительных материалов;</li>
-    <ul>
+    <li>Образ Docker (содержащий веб-приложение) расположен на ISO-образе (WEB-L|R -  /root/AppDocker0) дополнительных материалов;</li>
+    
+![Image alt](https://github.com/NewErr0r/39-WSI/blob/main/AppDocker0.png?raw=true)    
+    
+<ul>
         <li>Выполните установку приложения AppDocker0;</li>
     </ul>
     <li>Пакеты для установки Docker расположены на дополнительном ISO-образе;</li>
     <li>Инструкция по работе с приложением расположена на дополнительном ISO-образе (WEB-L/R /root/AppDocker0);</li>
     <h4>WEB-L</h4>
     <pre>apt update<br>apt install ca-certificates curl gnupg lsb-release -y <br>curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg<br>echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null<br>apt update<br>apt install -y docker-ce<br>systemctl enable --now docker</pre>
+    <pre>cd /root/AppDocker0<br>docker build -t app .<br>docker run --name app  -p 8080:80 -d app</pre>
     <h4>WEB-R</h4>
     <pre>apt update<br>apt install ca-certificates curl gnupg lsb-release -y <br>curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg<br>echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null<br>apt update<br>apt install -y docker-ce<br>systemctl enable --now docker</pre>
+    <pre>cd /root/AppDocker0<br>docker build -t app .<br>docker run --name app  -p 8080:80 -d app</pre>
 </ul>
