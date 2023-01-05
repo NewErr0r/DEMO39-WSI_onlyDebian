@@ -602,6 +602,33 @@ Restart-Computer
         <pre>systemctl restart sshd</pre>
         <h4>SRV</h4>
         <pre>cd /var/ca<br>scp root@172.16.100.254:/root/cert/app.req ./<br>openssl x509 -req -in app.req -CA ca.cer -CAkey ca.key -set_serial 100 -extentions app -days 1460 -outform PEM -out app.cer -sha256<br>scp app.cer root@172.16.100.254:/root/cert<br>rm -f app.</pre>
-
+        <h4>RTR-L</h4>
+        <pre>mkdir -p /etc/ssl/nginx/private<br>cp app.cer /etc/pki/nginx/<br>cp app.key /etc/pki/nginx/private</pre>
+        <pre>vi /etc/nginx/sites-available.d/proxy.conf</pre>
+        
+![Image alt](https://github.com/NewErr0r/39-WSI/blob/main/proxy_l.png?raw=true)        
+             
+    ln -s /etc/nginx/sites-available.d/proxy.conf /etc/nginx/sites-enabled.d/proxy.conf
+    nginx -t
+    systemctl restart nginx 
+        
+ <h4>RTR-R</h4>
+ <pre>mkdir -p /etc/ssl/nginx/private<br>cp app.cer /etc/pki/nginx/<br>cp app.key /etc/pki/nginx/private</pre>
+ <pre>vi /etc/nginx/sites-available.d/proxy.conf</pre>
+        
+![Image alt](https://github.com/NewErr0r/39-WSI/blob/main/proxy2.png?raw=true)        
+        
+    ln -s /etc/nginx/sites-available.d/proxy.conf /etc/nginx/sites-enabled.d/proxy.conf
+    nginx -t
+    systemctl restart nginx 
+        
+  <h4>SRV</h4>
+        <pre>cp /var/ca/ca.cer /mnt/storage</pre>
+  <h4>CLI</h4>
+        <pre>scp -P 2222 'root@4.4.4.100:/opt/share/ca.cer' C:\Users\user\Desktop\</pre>
+        <pre>Import-Certificate -FilePath "C:\Users\user\Desktop\ca.cer" -CertStoreLocation cert:\CurrentUser\Root</pre>
+  
+![Image alt](https://github.com/NewErr0r/39-WSI/blob/main/site.png?raw=true)
+        
   </ul>    
 </ul>
