@@ -526,3 +526,38 @@ Restart-Computer
     </ul>
 </ul>
  
+<ul>
+    <li>Выполните настройку центра сертификации на базе SRV:</li>
+    <ul>
+        <li>В случае применения решения на базе Linux используется центр сертификации типа OpenSSL и располагается по адресу /var/ca;</li>
+        <li>Выдаваемые сертификаты должны иметь срок жизни не менее 500 дней;</li>
+        <li>Параметры выдаваемых сертификатов:</li>
+        <ul>
+            <li>Страна RU;</li>
+            <li>Организация DEMO.WSR;</li>
+            <li>Прочие поля (за исключением CN) должны быть пусты;</li>
+        </ul>
+        <h4>SRV</h4>
+        <pre>mkdir /var/ca<br>cd /var/ca</pre>
+        <pre>openssl req -newkey rsa:4096 -keyform PEM -keyout ca.key -x509 -days 3650 -outform PEM -out ca.cer</pre>
+    
+![Image alt](https://github.com/NewErr0r/39-WSI/blob/main/Root_CA.png?raw=true)
+        
+</ul></ul>
+
+<h2>Инфраструктура веб-приложения</h2>
+
+<p>Данный блок подразумевает установку и настройку доступа к веб-приложению, выполненному в формате контейнера Docker.</p>
+
+<ul>
+    <li>Образ Docker (содержащий веб-приложение) расположен на ISO-образе (WEB-L/R /root/AppDocker0) дополнительных материалов;</li>
+    <ul>
+        <li>Выполните установку приложения AppDocker0;</li>
+    </ul>
+    <li>Пакеты для установки Docker расположены на дополнительном ISO-образе;</li>
+    <li>Инструкция по работе с приложением расположена на дополнительном ISO-образе (WEB-L/R /root/AppDocker0);</li>
+    <h4>WEB-L</h4>
+    <pre>apt update<br>apt install ca-certificates curl gnupg lsb-release -y <br>curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg<br>echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null<br>apt update<br>apt install -y docker-ce<br>systemctl enable --now docker</pre>
+    <h4>WEB-R</h4>
+    <pre>apt update<br>apt install ca-certificates curl gnupg lsb-release -y <br>curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg<br>echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null<br>apt update<br>apt install -y docker-ce<br>systemctl enable --now docker</pre>
+</ul>
