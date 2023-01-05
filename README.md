@@ -566,3 +566,31 @@ Restart-Computer
     <pre>apt update<br>apt install ca-certificates curl gnupg lsb-release -y <br>curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg<br>echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null<br>apt update<br>apt install -y docker-ce<br>systemctl enable --now docker</pre>
     <pre>cd /root/AppDocker0<br>docker build -t app .<br>docker run --name app  -p 8080:80 -d app</pre>
 </ul>
+
+<ul>
+    <li>Необходимо реализовать следующую инфраструктуру приложения.</li>
+    <ul>
+        <li>Клиентом приложения является CLI (браузер Edge);</li>
+        <li>Хостинг приложения осуществляется на ВМ WEB-L и WEB-R;</li>
+        <li>Доступ к приложению осуществляется по DNS-имени www.demo.wsr;</li>
+        <ul>
+            <li>Имя должно разрешаться во “внешние” адреса ВМ управления трафиком в обоих регионах;</li>
+            <li>При необходимости, для доступа к к приложению допускается реализовать реверс-прокси или трансляцию портов;</li>
+        </ul>
+        <li>Доступ к приложению должен быть защищен с применением технологии TLS;</li>
+        <ul>
+            <li>Необходимо обеспечить корректное доверие сертификату сайта, без применения “исключений” и подобных механизмов;</li>
+        </ul>
+        <li>Незащищенное соединение должно переводиться на защищенный канал автоматически;</li>
+        </ul>
+    <li>Необходимо обеспечить отказоустойчивость приложения;</li>
+    <ul>
+        <li>Сайт должен продолжать обслуживание (с задержкой не более 25 секунд) в следующих сценариях:</li>
+        <ul>
+            <li>Отказ одной из ВМ Web</li>
+            <li>Отказ одной из ВМ управления трафиком.</li>
+        </ul>
+        <h4>RTR-L</h4>
+        <pre></pre>
+    </ul>    
+</ul>
