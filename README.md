@@ -498,8 +498,31 @@ Restart-Computer
         <h4>SRV</h4>
         <pre>apt install mdadm -y</pre>
         <pre>mdadm --zero-superblock --force /dev/sd{b,c}<br>wipefs --all --force /dev/sd{b,c}<br>mdadm --create --verbose /dev/md0 -l 1 -n 2 /dev/sd{b,c}<br>mkfs.ext4 /dev/md0</pre>
-        <pre>mkdir /mnt/storage<br>chmod 777 /mnt/storage</pre>
-        <pre>apt install samba -y</pre>
-        <pre></pre>
+        <pre>mkdir /mnt/storage<br>chmod 777 /mnt/storage<br>echo /dev/md0 /mnt/storage ext4 defaults 1 2 >> /etc/fstab<br>mount -a</pre>
+        <pre>apt install samba smbclient cifs-utils -y</pre>
+        
+<pre>vi /etc/samba/smb.conf</pre>
+        
+![Image alt](https://github.com/NewErr0r/39-WSI/blob/main/smb_conf.png?raw=true)
+     
+ <pre>systemctl restart smbd</pre>
+
+ </ul></ul>
+ 
+ <ul>
+    <li>Сервера WEB-L и WEB-R должны использовать службу, настроенную на SRV, для обмена файлами между собой:</li>
+    <ul>
+        <li>Служба файлового обмена должна позволять монтирование в виде стандартного каталога Linux;</li>
+        <ul>
+            <li>Разделяемый каталог должен быть смонтирован по адресу /opt/share;</li>
+        </ul>
+        <li>Каталог должен позволять удалять и создавать файлы в нем для всех пользователей;</li>
+        <h4>WEB-L</h4>
+        <pre>apt install -y cifs-utils</pre>
+        <pre>mkdir /opt/share<br>chmod 777 /opt/share<br>echo //srv.int.demo.wsr/storage /opt/share cifs guest 0 0 >> /etc/fstab<br>mount -a</pre>
+        <h4>WEB-R</h4>
+        <pre>apt install -y cifs-utils</pre>
+        <pre>mkdir /opt/share<br>chmod 777 /opt/share<br>echo //srv.int.demo.wsr/storage /opt/share cifs guest 0 0 >> /etc/fstab<br>mount -a</pre>
     </ul>
 </ul>
+ 
