@@ -496,6 +496,10 @@ Restart-Computer
         </ul>
         <li>Хранение файлов осуществляется на диске (смонтированном по указанным выше адресам), реализованном по технологии RAID типа “Зеркало”;</li>
         <h4>SRV</h4>
+        <pre>apt install mdadm -y</pre>
+        <pre>mdadm --zero-superblock --force /dev/sd{b,c}<br>wipefs --all --force /dev/sd{b,c}<br>mdadm --create --verbose /dev/md0 -l 1 -n 2 /dev/sd{b,c}<br>mkfs.ext4 /dev/md0</pre>
+        <pre>mkdir /mnt/storage<br>chmod 777 /mnt/storage</pre>
+        <pre>apt install samba -y</pre>
         <pre></pre>
     </ul>
 </ul>
