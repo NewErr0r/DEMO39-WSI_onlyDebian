@@ -591,6 +591,17 @@ Restart-Computer
             <li>Отказ одной из ВМ управления трафиком.</li>
         </ul>
         <h4>RTR-L</h4>
-        <pre></pre>
-    </ul>    
+        <pre>apt install nginx -y<br>systemctl enable --now nginx</pre>
+        <pre>mkdir cert<br>cd cert<br>openssl genrsa -out app.key 4096<br>openssl req -new -key app.key -out app.req -sha256</pre>
+        <h4>SRV</h4>
+        <pre>cd /var/ca<br>scp root@192.168.100.254:/root/cert/app.req ./<br>openssl x509 -req -in app.req -CA ca.cer -CAkey ca.key -set_serial 100 -extentions app -days 1460 -outform PEM -out app.cer -sha256<br>scp app.cer root@192.168.100.254:/root/cert<br>rm -f app.</pre>
+        <h4>RTR-R</h4>
+        <pre>apt install nginx -y<br>systemctl enable --now nginx</pre>
+        <pre>mkdir cert<br>cd cert<br>openssl genrsa -out app.key 4096<br>openssl req -new -key app.key -out app.req -sha256</pre>
+        <pre>vi /etc/ssh/sshd_config<br>...<br>PermitRootLogin yes<br>...</pre>
+        <pre>systemctl restart sshd</pre>
+        <h4>SRV</h4>
+        <pre>cd /var/ca<br>scp root@172.16.100.254:/root/cert/app.req ./<br>openssl x509 -req -in app.req -CA ca.cer -CAkey ca.key -set_serial 100 -extentions app -days 1460 -outform PEM -out app.cer -sha256<br>scp app.cer root@172.16.100.254:/root/cert<br>rm -f app.</pre>
+
+  </ul>    
 </ul>
